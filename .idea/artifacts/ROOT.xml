@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="TestProject1">
-    <output-path>$PROJECT_DIR$/out/artifacts/TestProject1</output-path>
+  <artifact type="exploded-war" name="ROOT">
+    <output-path>$PROJECT_DIR$/out/artifacts/ROOT</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="TestProject1/web/Web" />
       <element id="directory" name="WEB-INF">
@@ -18,6 +18,13 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.1.8.RELEASE" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web8" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web6" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web7" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web5" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web4" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web3" />
+      <element id="javaee-facet-resources" facet="TestProject1/web/Web2" />
     </root>
   </artifact>
 </component>
