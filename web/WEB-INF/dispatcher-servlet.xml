@@ -23,9 +23,4 @@
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
-
-    <bean class="ru.abr.dit.Beans.TestBean" name="bean">
-        <constructor-arg index="0" value="BEAN NAME2"/>
-    </bean>
-
 </beans>

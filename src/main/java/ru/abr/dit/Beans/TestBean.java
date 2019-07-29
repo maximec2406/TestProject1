@@ -6,7 +6,6 @@ public class TestBean {
     private String info;
 
     public TestBean() {
-//        this.name = "BEAN NAME";
     }
 
     public TestBean(String name) {
