@@ -5,15 +5,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import ru.abr.dit.Beans.TestBean;
+import ru.abr.dit.DAO.MainDAOBean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 
-@ComponentScan("ru.abr.dit")
+@ComponentScan("ru.abr.dit.*")
 @Configuration
-//@EnableAutoConfiguration
 public class ApplicationConfiguration {
 
     @Bean
@@ -22,13 +22,17 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public EntityManager getEntityManager(@Autowired EntityManagerFactory emf){
+    public EntityManager createEntityManager(@Autowired EntityManagerFactory emf){
         return emf.createEntityManager();
     }
 
     @Bean
-    public EntityManagerFactory getEntityManagerFactory(){
-        return Persistence.createEntityManagerFactory("TestPersisUnit");
+    public EntityManagerFactory createEntityManagerFactory(){
+        return Persistence.createEntityManagerFactory("PromPersistUnit");
+    }
+
+    public MainDAOBean getMainDAOBean(){
+        return new MainDAOBean();
     }
 
 }

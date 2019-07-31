@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.abr.dit.Beans.TestBean;
+import ru.abr.dit.DAO.MainDAOBean;
 import ru.abr.dit.Models.User;
-
-import javax.persistence.EntityManager;
+import java.util.List;
 
 @Controller
 public class SecondController {
@@ -16,31 +16,27 @@ public class SecondController {
     private TestBean bean;
 
     @Autowired
-    EntityManager em;
+    private MainDAOBean mainDAOBean;
 
     @RequestMapping(value = "/getUser")
     public ModelAndView main() {
 
-        // создаю тестовых пользователей
+        User user1 = new User("Zh");
+        mainDAOBean.saveUser(user1);
+        mainDAOBean.saveUser(new User("Vasya"));
 
-        User user1 = new User();
-        user1.setLogin("lklkl");
-//        User user2 = new User("su");
-//        MainDAO.saveUser(user1);
-//        MainDAO.saveUser(user2);
-//
-        em.getTransaction().begin();
-        em.persist(user1);
-        em.getTransaction().commit();
-        em.close();
+        List<User> users = null;
 
-//        ArrayList<User> users = new ArrayList<>();
-//        users.add(user1);
-//        users.add(user2);
+        try {
+             users = mainDAOBean.getUsers();
+        } catch (Exception e) {
+            System.out.println("УУУУУУУУУУУУПС");
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user");
         modelAndView.addObject("bean",bean);
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 }

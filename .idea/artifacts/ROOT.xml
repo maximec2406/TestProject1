@@ -39,6 +39,16 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-test:4.3.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.postgresql:postgresql:9.3-1102-jdbc41" />
           <element id="library" level="project" name="Maven: com.h2database:h2:1.4.197" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.13" />
+          <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.0.Final" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.13.12.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-jpa:1.11.12.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final" />
         </element>
       </element>
     </root>
