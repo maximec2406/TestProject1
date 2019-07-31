@@ -27,7 +27,7 @@ public class MainDAOBean {
     }
 
     public List getUsers(){
-        return em.createQuery("From ABR_USER").getResultList();
+        return em.createQuery("From User").getResultList();
 
     }
 }
