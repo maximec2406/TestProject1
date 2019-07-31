@@ -1,37 +1,33 @@
 import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
 import ru.abr.dit.Models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+@ContextConfiguration(classes = ru.abr.dit.Configurations.ApplicationConfiguration.class)
 public class Test1 {
 
     @Test
     public void createUser(){
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TestPersisUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PostgreTestPersisUnit");
         EntityManager em = emf.createEntityManager();
-        em.getTransaction();
+        em.getTransaction().begin();
 
-        User user = new User("testUser");
-//        try {
+        System.out.println("1");
+        User user = new User();
+        user.setLogin("login1");
 
-            System.out.println("1");
+        try {
             em.persist(user);
-            System.out.println("2");
             em.getTransaction().commit();
-
-
-//        } catch (Exception e) {
-//            System.out.println("ФЕЙЛ!" + e.getMessage() + "\n" + e.getStackTrace());
-//            e.getStackTrace();
-//            StackTraceElement
-//
-//            t.rollback();
-//            throw e;
-//
-//        }
+            em.close();
+            System.out.println("3");
+        } catch (Exception e) {
+            System.out.println("ФЕЙЛ!" + e.getMessage() + "\n" + e.getStackTrace());
+            em.getTransaction().rollback();
+        }
     }
 }

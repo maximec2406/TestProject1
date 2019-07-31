@@ -1,43 +1,41 @@
 package ru.abr.dit.Models;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "ABR_USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private String id;
+    @Column(unique = true, nullable = false)
+    private int id;
 
     @Column
-    private String login;
+    private String name;
 
     @Column
     private String info;
 
-    @Column
-    private Date birthday;
-
-    public User(String login) {
-        this.login = login;
-    }
+    @Column(unique = true, nullable = false)
+    private String login;
 
     public User() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getInfo() {
@@ -48,11 +46,11 @@ public class User {
         this.info = info;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getLogin() {
+        return login;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setLogin(String login) {
+        this.login = login;
     }
 }
