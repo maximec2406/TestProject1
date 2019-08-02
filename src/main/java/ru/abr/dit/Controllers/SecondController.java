@@ -2,7 +2,9 @@ package ru.abr.dit.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.abr.dit.Beans.TestBean;
 import ru.abr.dit.DAO.MainDAOBean;
@@ -38,5 +40,12 @@ public class SecondController {
         modelAndView.addObject("bean",bean);
         modelAndView.addObject("users", users);
         return modelAndView;
+    }
+
+    // чтобы не забыть, как вытаскивать параметры запросов
+    @RequestMapping(value = "/addUser")
+    public String postAddUserForm(@RequestParam String kind, String login, ModelMap model) {
+        String login1=login;
+        return login1;
     }
 }

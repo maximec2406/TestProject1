@@ -3,8 +3,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "TP1_USER")
-public class User {
+@Table(name = "TP1_Author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,23 +14,20 @@ public class User {
     @Column (nullable = false)
     private Date create_time;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    @Column (nullable = false)
-    private String password_hash;
-
-    @Column (unique = true, nullable = false)
-    private String nickname;
-
-    @Column (length = 500)
+    @Column (length = 500, nullable = false)
     private String first_name;
 
-    @Column (length = 1000)
+    @Column (length = 1000, nullable = false)
     private String last_name;
 
-    @Column
+    @Column (length = 1000)
+    private String patronymic;
+
+    @Column (nullable = false)
     private Date birthday;
+
+    @Column
+    private Date deathday;
 
     @Column (length = 2000)
     private String about;
@@ -38,17 +35,16 @@ public class User {
     @Column
     private String photo;
 
-    @Column (nullable = false)
-    private boolean locked;
+    @Column //сделай выбор из списка
+    private String country;
 
-    public User() {
+    public Author() {
     }
 
-    public User(String email, String password_hash, String nickname) {
-        this.email = email;
-        this.password_hash = password_hash;
-        this.nickname = nickname;
-        this.locked = false;
+    public Author(String first_name, String last_name, Date birthday) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birthday = birthday;
         this.create_time = new Date();
     }
 
@@ -56,32 +52,16 @@ public class User {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Date getCreate_time() {
         return create_time;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword_hash() {
-        return password_hash;
-    }
-
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
     public String getFirst_name() {
@@ -100,12 +80,28 @@ public class User {
         this.last_name = last_name;
     }
 
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Date getDeathday() {
+        return deathday;
+    }
+
+    public void setDeathday(Date deathday) {
+        this.deathday = deathday;
     }
 
     public String getAbout() {
@@ -124,11 +120,11 @@ public class User {
         this.photo = photo;
     }
 
-    public boolean isLocked() {
-        return locked;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
