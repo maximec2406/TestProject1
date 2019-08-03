@@ -1,5 +1,6 @@
 package ru.abr.dit.Models;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -37,6 +38,9 @@ public class Author {
 
     @Column //сделай выбор из списка
     private String country;
+
+    @OneToMany(mappedBy = "author")
+    private ArrayList<Book> books;
 
     public Author() {
     }
