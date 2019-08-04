@@ -1,5 +1,6 @@
 package ru.abr.dit.Models;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -12,6 +13,7 @@ public class User {
     private int id;
 
     @Column (nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date create_time;
 
     @Column(unique = true, nullable = false)
@@ -30,6 +32,7 @@ public class User {
     private String last_name;
 
     @Column
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     @Column (length = 2000)
@@ -40,6 +43,21 @@ public class User {
 
     @Column (nullable = false)
     private boolean locked;
+
+    @OneToMany(mappedBy = "user")
+    private ArrayList<Review> reviews;
+
+    @ManyToMany
+    @JoinTable (name="TP1_ROLE",
+            joinColumns=@JoinColumn (name="id"),
+            inverseJoinColumns=@JoinColumn(name="id"))
+    private ArrayList<Role> roles;
+
+    @OneToMany (mappedBy = "user_from")
+    private ArrayList<Recomendations> rec_from_user;
+
+    @OneToMany (mappedBy = "user_to")
+    private ArrayList<Recomendations> rec_to_user;
 
     public User() {
     }
@@ -130,5 +148,37 @@ public class User {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
+
+    public ArrayList<Recomendations> getRec_from_user() {
+        return rec_from_user;
+    }
+
+    public void setRec_from_user(ArrayList<Recomendations> rec_from_user) {
+        this.rec_from_user = rec_from_user;
+    }
+
+    public ArrayList<Recomendations> getRec_to_user() {
+        return rec_to_user;
+    }
+
+    public void setRec_to_user(ArrayList<Recomendations> rec_to_user) {
+        this.rec_to_user = rec_to_user;
     }
 }

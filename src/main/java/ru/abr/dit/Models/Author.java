@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-@Table(name = "TP1_Author")
+@Table(name = "TP1_AUTHOR")
 public class Author {
 
     @Id
@@ -13,6 +13,7 @@ public class Author {
     private int id;
 
     @Column (nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date create_time;
 
     @Column (length = 500, nullable = false)
@@ -25,9 +26,11 @@ public class Author {
     private String patronymic;
 
     @Column (nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     @Column
+    @Temporal(TemporalType.DATE)
     private Date deathday;
 
     @Column (length = 2000)
@@ -39,7 +42,7 @@ public class Author {
     @Column //сделай выбор из списка
     private String country;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private ArrayList<Book> books;
 
     public Author() {
