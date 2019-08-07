@@ -30,7 +30,7 @@ public class Review {
     @Column
     private String text;
 
-    @Column (nullable = false) // сделай enumirated
+    // сделай enumirated
     @ManyToOne (targetEntity = ru.abr.dit.Models.Visibility.class)
     private Visibility visability;
 

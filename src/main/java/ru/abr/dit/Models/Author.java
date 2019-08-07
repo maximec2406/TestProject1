@@ -1,7 +1,9 @@
 package ru.abr.dit.Models;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "TP1_AUTHOR")
@@ -16,15 +18,18 @@ public class Author {
     @Temporal(TemporalType.TIMESTAMP)
     private Date create_time;
 
+    @NotNull(message = "Enter first name")
     @Column (length = 500, nullable = false)
     private String first_name;
 
+    @NotNull(message = "Enter last name")
     @Column (length = 1000, nullable = false)
     private String last_name;
 
     @Column (length = 1000)
     private String patronymic;
 
+    @NotNull(message = "Enter birthday")
     @Column (nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthday;
@@ -43,7 +48,7 @@ public class Author {
     private String country;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    private ArrayList<Book> books;
+    private List<Book> books;
 
     public Author() {
     }
@@ -133,5 +138,13 @@ public class Author {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

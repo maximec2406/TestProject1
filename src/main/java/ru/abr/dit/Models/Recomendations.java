@@ -16,26 +16,23 @@ public class Recomendations {
     @Temporal(TemporalType.TIMESTAMP)
     private Date create_time;
 
-    @Column (nullable = false)
     @ManyToOne
     private User user_from;
 
-    @Column (nullable = false)
     @ManyToOne
     private User user_to;
 
     @Column
-    @ManyToOne
-    private Book book;
+    private String bookid;
 
     public Recomendations() {
         this.create_time = new Date();
     }
 
-    public Recomendations(User user_from, User user_to, Book book) {
+    public Recomendations(User user_from, User user_to, String bookid) {
         this.user_from = user_from;
         this.user_to = user_to;
-        this.book = book;
+        this.bookid = bookid;
         this.create_time = new Date();
     }
 
@@ -63,11 +60,11 @@ public class Recomendations {
         this.user_to = user_to;
     }
 
-    public Book getBook() {
-        return book;
+    public String getBook() {
+        return bookid;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBook(String bookid) {
+        this.bookid = bookid;
     }
 }

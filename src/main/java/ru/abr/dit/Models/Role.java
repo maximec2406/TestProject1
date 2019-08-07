@@ -2,6 +2,7 @@ package ru.abr.dit.Models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table (name = "TP1_ROLE")
@@ -18,6 +19,12 @@ public class Role {
 
     @Column (nullable = false, length = 500)
     private String name;
+
+    @ManyToMany
+    @JoinTable (name="TP1_USER_ROLE",
+            joinColumns=@JoinColumn (name="role_id"),
+            inverseJoinColumns=@JoinColumn(name="user_id"))
+    private List<User> users;
 
     public Role() {
         this.create_time = new Date();

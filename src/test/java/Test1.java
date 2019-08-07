@@ -17,7 +17,7 @@ public class Test1 {
         em.getTransaction().begin();
 
         User user = new User();
-        user.setLogin("login1");
+        user.setNickname("login1");
 
         try {
             em.persist(user);

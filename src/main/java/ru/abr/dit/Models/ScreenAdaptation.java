@@ -40,4 +40,52 @@ public class ScreenAdaptation {
         this.name = name;
         this.create_time = new Date();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getKinopoisk() {
+        return kinopoisk;
+    }
+
+    public void setKinopoisk(String kinopoisk) {
+        this.kinopoisk = kinopoisk;
+    }
 }

@@ -3,6 +3,7 @@ package ru.abr.dit.Models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table (name = "TP1_BOOK")
@@ -36,13 +37,13 @@ public class Book {
     private Author author;
 
     @OneToMany (mappedBy = "book")
-    private ArrayList<Review> reviews;
+    private List<Review> reviews;
 
     @ManyToMany
-    @JoinTable (name="TP1_GENRE",
-            joinColumns=@JoinColumn (name="id"),
-            inverseJoinColumns=@JoinColumn(name="id"))
-    private ArrayList<Genre> genres;
+    @JoinTable (name="TP1_BOOK_GENRE",
+            joinColumns=@JoinColumn (name="book_id"),
+            inverseJoinColumns=@JoinColumn(name="genre_id"))
+    private List<Genre> genres;
 
     public Book() {
     }
@@ -107,11 +108,19 @@ public class Book {
         this.author = author;
     }
 
-    public ArrayList<Review> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 }
