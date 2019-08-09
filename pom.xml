@@ -104,6 +104,13 @@
             <version>6.0.17.Final</version>
         </dependency>
 
+<!--        для загрузки файла из интернета и сохранения на диск-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
     </dependencies>
 
 

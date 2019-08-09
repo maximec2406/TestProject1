@@ -12,5 +12,12 @@
 </head>
 <body>
 
+<form action="http://crl.globalsign.com/gs/gsextendvalsha2g3r3.crl" method="get">
+    <input type=hidden name="param1" value="1">
+    <input type=hidden name="param2" value="2">
+    <input type=submit>
+</form>
+
+
 </body>
 </html>

@@ -1,7 +1,10 @@
 package ru.abr.dit.Models;
+import ru.abr.dit.Enums.EnumCountry;
+import ru.abr.dit.Enums.EnumCountryConverter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -18,18 +21,21 @@ public class Author {
     @Temporal(TemporalType.TIMESTAMP)
     private Date create_time;
 
-    @NotNull(message = "Enter first name")
+//    Проверки для форм можно вешать и на сюда, на сущность, но верно ли это?
+//    @NotNull(message = "Enter first name")
+//    @Size(min = 5, max = 500, message = "Enter first name")
     @Column (length = 500, nullable = false)
     private String first_name;
 
-    @NotNull(message = "Enter last name")
+//      Проверки для форм можно вешать и на сюда, на сущность, но верно ли это?
+//    @NotNull(message = "Enter last name")
+//    @Size(min = 5, max = 500, message = "Enter last name")
     @Column (length = 1000, nullable = false)
     private String last_name;
 
     @Column (length = 1000)
     private String patronymic;
 
-    @NotNull(message = "Enter birthday")
     @Column (nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthday;
@@ -45,7 +51,8 @@ public class Author {
     private String photo;
 
     @Column //сделай выбор из списка
-    private String country;
+    @Convert(converter = EnumCountryConverter.class)
+    private EnumCountry country;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> books;
@@ -57,6 +64,18 @@ public class Author {
         this.first_name = first_name;
         this.last_name = last_name;
         this.birthday = birthday;
+        this.create_time = new Date();
+    }
+
+    public Author(String first_name, String last_name, String patronymic, Date birthday, Date deathday, String about, String photo, EnumCountry country) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.patronymic = patronymic;
+        this.birthday = birthday;
+        this.deathday = deathday;
+        this.about = about;
+        this.photo = photo;
+        this.country = country;
         this.create_time = new Date();
     }
 
@@ -132,11 +151,11 @@ public class Author {
         this.photo = photo;
     }
 
-    public String getCountry() {
+    public EnumCountry getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(EnumCountry country) {
         this.country = country;
     }
 
