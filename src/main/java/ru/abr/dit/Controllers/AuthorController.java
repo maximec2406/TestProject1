@@ -47,7 +47,7 @@ public class AuthorController {
 
         Author a = new Author(form.getFirst_name(),form.getLast_name(), form.getPatronymic(), form.getBirthday(),form.getDeathday(),form.getAbout(),form.getPhoto(), EnumCountry.valueOf(form.getCountry()));
 
-        return udb.saveAuthor(a) ? "successAuthorSave" : "failAuthorSave";
+        return udb.createAuthor(a) ? "successAuthorSave" : "failAuthorSave";
     }
 
 

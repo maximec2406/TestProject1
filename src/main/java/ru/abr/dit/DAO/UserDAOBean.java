@@ -11,7 +11,6 @@ import ru.abr.dit.Models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,22 +21,36 @@ public class UserDAOBean {
     @PersistenceContext
     private EntityManager em;
 
-    public boolean checkUserNickname(String nickname){
-
-        Boolean result = true;
-
+    public User findUserByNickname(String nickname){
         try {
-            em.createQuery("from User where nickname =:nickname", User.class).setParameter("nickname", nickname).getSingleResult();
+            User user = (User) em.createQuery("from User where nickname =:nickname", User.class).setParameter("nickname", nickname).getSingleResult();
+            return user;
         } catch (EmptyResultDataAccessException e) {
-            result = false;
+            return  null;
+        } catch (EntityNotFoundException e){
+            return null;
         } catch (Exception e) {
             System.out.println("Неизвестный Exception в UserDAOBean");
             System.out.println(e.getMessage());
+            return null;
         }
+    }
+
+    public boolean createUser (User user) {
+
+        boolean result = false;
+
+        try {
+            em.persist(user);
+            result = true;
+        } catch (Exception e){
+            result = false;
+        }
+
         return result;
     }
 
-    public boolean saveAuthor (Author a) {
+    public boolean createAuthor (Author a) {
 
         boolean result = false;
 
@@ -61,6 +74,8 @@ public class UserDAOBean {
         try {
             User user = (User) em.createQuery("from User where email =:email").setParameter("email", email).getSingleResult();
             return user;
+        } catch (EmptyResultDataAccessException e) {
+            return  null;
         } catch (EntityNotFoundException e){
             return null;
         } catch (Exception e){

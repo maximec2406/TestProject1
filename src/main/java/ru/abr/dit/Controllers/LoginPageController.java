@@ -37,7 +37,7 @@ public class LoginPageController {
         if(!br.hasErrors()) {
             User user = userDAOBean.findUserByEmail(form.getUsername());
             if (user != null)
-                if (user.getEncryptedPassword().equals(passwordEncoder.encode(form.getPassword())))
+                if (passwordEncoder.matches(form.getPassword(),user.getEncryptedPassword()))
                     result = "home";
                 else
                     br.addError(new FieldError("loginForm", "errorMessage", "Неверный пароль"));
