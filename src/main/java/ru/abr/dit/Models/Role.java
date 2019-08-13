@@ -34,4 +34,28 @@ public class Role {
         this.name = name;
         this.create_time = new Date();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }

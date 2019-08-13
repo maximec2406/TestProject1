@@ -1,6 +1,5 @@
 package ru.abr.dit.Beans.FormBeans;
 
-
 import javax.validation.constraints.*;
 import java.util.Date;
 

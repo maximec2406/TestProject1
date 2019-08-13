@@ -2,28 +2,26 @@ package ru.abr.dit.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.abr.dit.Models.User;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
+@Service
+@Transactional
 public class MainDAOBean {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager em;
-
-    @Autowired
-    private EntityManagerFactory emf;
 
     public MainDAOBean() {
     }
 
     public void saveUser(User user) {
-        em.getTransaction().begin();
         em.persist(user);
-        em.getTransaction().commit();
+        // допиши метод нормально
     }
 
     public List getUsers(){

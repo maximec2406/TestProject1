@@ -15,8 +15,6 @@ public class EntityCheks {
         //проверка уникальности nickname
         String nickname = user.getNickname();
 
-
-
         return result;
     }
 

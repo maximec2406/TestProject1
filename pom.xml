@@ -68,7 +68,7 @@
             <artifactId>h2</artifactId>
             <version>1.4.197</version>
         </dependency>
-        <dependency>
+        <dependency><!-- эта зависимость для @Transactional -->
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>4.3.9.RELEASE</version>
@@ -78,7 +78,6 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>1.11.12.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -90,6 +89,14 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
+        </dependency>
+
+        <!-- почему то для Security понадобился -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
 <!--для валидации форм по бинам -->
@@ -110,6 +117,26 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+
+<!--        security пошла-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>4.2.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.2.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>4.2.3.RELEASE</version>
+        </dependency>
+
+
+<!--        security закончилась-->
 
     </dependencies>
 

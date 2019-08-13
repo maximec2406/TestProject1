@@ -3,6 +3,7 @@ package ru.abr.dit.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
-public class addAuthorController {
+public class AuthorController {
 
     @Autowired
     private UserDAOBean udb;
@@ -31,13 +32,11 @@ public class addAuthorController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
+    @Transactional
     @RequestMapping(path="/manageAuthor", method = RequestMethod.POST)
     public String addAuthor(@Valid @ModelAttribute(name = "authorModel") AddAuthorFormBean form, BindingResult br, ModelMap model){
 
-//        model.addAttribute()form.getCountry()
         model.addAttribute("EnumCountry", EnumCountry.values());
-        System.out.println("COUNTRY!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(form.getCountry() );
 
         // кастомные проверки
 //        br.addError(new FieldError("authorModel", "first_name","Дай имя"));
@@ -47,6 +46,7 @@ public class addAuthorController {
         }
 
         Author a = new Author(form.getFirst_name(),form.getLast_name(), form.getPatronymic(), form.getBirthday(),form.getDeathday(),form.getAbout(),form.getPhoto(), EnumCountry.valueOf(form.getCountry()));
+
         return udb.saveAuthor(a) ? "successAuthorSave" : "failAuthorSave";
     }
 

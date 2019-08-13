@@ -4,32 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import ru.abr.dit.Beans.TestBean;
 import ru.abr.dit.DAO.MainDAOBean;
-
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @EnableWebMvc
 @ComponentScan("ru.abr.dit.*")
 @Configuration
+@EnableTransactionManagement //управление транзакциями, конфиг для методов @Transactional
+@Import(SecurityConfigeration.class)//связали конфиги
 public class ApplicationConfiguration {
 
-    @Bean
-    public TestBean getTestBean(){
-        return new TestBean("OLOLO");
-    }
-
-    @Bean
-    public EntityManager createEntityManager(@Autowired EntityManagerFactory emf){
-        return emf.createEntityManager();
-    }
+//    этот бин больше не нужен, даже опасен, т.к. используется управление транзакциями
+//    @Bean
+//    public EntityManager createEntityManager(@Autowired EntityManagerFactory emf){
+//        return emf.createEntityManager();
+//    }
 
     @Bean
     public EntityManagerFactory createEntityManagerFactory(){
@@ -48,6 +46,11 @@ public class ApplicationConfiguration {
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         return resolver;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager (@Autowired EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
     }
 
 }
