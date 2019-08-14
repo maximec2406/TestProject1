@@ -13,13 +13,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import ru.abr.dit.Beans.FormBeans.CreateEditUserBean;
 import ru.abr.dit.DAO.UserDAOBean;
+import ru.abr.dit.Enums.EnumCountry;
+import ru.abr.dit.Models.Role;
 import ru.abr.dit.Models.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @Transactional
@@ -31,6 +37,9 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private List<String> roles;
+
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,10 +48,13 @@ public class UserController {
     }
 
 
-
     @GetMapping(path = "/newUser")
-    public String getNewUserForm(@ModelAttribute(name = "newUser") CreateEditUserBean form){
-        return "CreateUser";
+    public ModelAndView getNewUserForm(@ModelAttribute(name = "newUser") CreateEditUserBean form){
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("CreateUser");
+        model.addObject("Roles", userDAOBean.getRolesNames());
+        return model;
     }
 
     @PostMapping(path = "/createUser")
@@ -53,14 +65,14 @@ public class UserController {
             br.addError(new FieldError("newUser","email","Такой email уже существует"));
         if (userDAOBean.findUserByNickname(form.getNickname()) != null)
             br.addError(new FieldError("newUser","nickname","Такой nickname уже существует"));
-        if (userDAOBean.findUserByNickname(form.getNickname()) != null)
-            br.addError(new FieldError("newUser","nickname","Такой nickname уже существует"));
         if(!form.getSecPassword().equals(form.getPassword()))
             br.addError(new FieldError("newUser", "secPassword", "Пароль и подтверждение пароля не совпадают"));
-        if(br.hasErrors())
+        if(br.hasErrors()) {
+            model.addAttribute("Roles", userDAOBean.getRolesNames());
             return "CreateUser";
+        }
         else {
-            User user = new User(form.getEmail(), passwordEncoder.encode(form.getPassword()), form.getNickname());
+            User user = new User(form.getEmail(), passwordEncoder.encode(form.getPassword()), form.getNickname(), userDAOBean.getRoleByName(form.getRole()));
             user.setAbout(form.getAbout());
             user.setBirthday(form.getBirthday());
             user.setFirst_name(form.getFirst_name());

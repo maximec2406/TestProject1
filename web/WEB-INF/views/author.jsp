@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form"  uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="securety" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: maksimovich_y
@@ -69,6 +70,9 @@
                 </td>
             </tr>
         </table>
+        <div hidden>
+            <securety:csrfInput/>
+        </div>
 
     </form:form>
 

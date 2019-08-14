@@ -52,11 +52,15 @@ public class User {
     @OneToMany (mappedBy = "user_to")
     private List<Recomendations> recomendationsTo;
 
-    @ManyToMany
-    @JoinTable (name="TP1_USER_ROLE",
-            joinColumns=@JoinColumn (name="user_id"),
-            inverseJoinColumns=@JoinColumn(name="role_id"))
-    private List<Role> roles;
+//    потом сделаем возможность выбирать несколько ролей для одного пользователя
+//    @ManyToMany
+//    @JoinTable (name="TP1_USER_ROLE",
+//            joinColumns=@JoinColumn (name="user_id"),
+//            inverseJoinColumns=@JoinColumn(name="role_id"))
+//    private List<Role> roles;
+
+    @ManyToOne
+    private Role role;
 
     @OneToMany (mappedBy = "user_from")
     private List<Recomendations> rec_from_user;
@@ -71,12 +75,13 @@ public class User {
     public User() {
     }
 
-    public User(String email, String encryptedPassword, String nickname) {
+    public User(String email, String encryptedPassword, String nickname, Role role) {
         this.email = email;
         this.encryptedPassword = encryptedPassword;
         this.nickname = nickname;
         this.locked = false;
         this.create_time = new Date();
+        this.role = role;
     }
 
     public int getId() {
@@ -159,12 +164,12 @@ public class User {
         this.reviews = reviews;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<Recomendations> getRec_from_user() {

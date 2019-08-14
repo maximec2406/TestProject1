@@ -29,33 +29,21 @@ public class UserRoleService implements UserDetailsService {
     private EntityManager em;
 
     public UserDetails loadUserByUsername (String email)  throws UsernameNotFoundException {
+
         ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
 
         try {
             User user = userDAOBean.findUserByEmail(email);
 
-            int id = user.getId();
-
-            List rolesIdsList = em.createQuery("from TP1_USER_ROLE where user_id =:userId").setParameter("userId",id).getResultList();
-
-            List<Role> tp1Roles = em.createQuery("from Role where id in (:list)").setParameter("list", rolesIdsList).getResultList();
-
-            for (int i = 0; i < tp1Roles.size(); i++) {
-
-                switch (tp1Roles.get(i).getName()){
-
-                    case ("ADMIN") :
-                        roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                        break;
-
-                    case ("USER") :
-                        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-                        break;
-                }
-
-            }
-
-            return new org.springframework.security.core.userdetails.User(email,"...",roles);
+           switch (user.getRole().getName()){
+               case "Администратор":
+                   roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                   break;
+               case "Пользователь":
+                   roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+                   break;
+           }
+            return new org.springframework.security.core.userdetails.User(email,user.getEncryptedPassword(),roles);
         } catch (NoResultException notFound) {
             throw new UsernameNotFoundException("User " + email + "not found");
         }

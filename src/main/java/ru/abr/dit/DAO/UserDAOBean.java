@@ -1,7 +1,6 @@
 package ru.abr.dit.DAO;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.abr.dit.Models.Author;
@@ -31,6 +30,20 @@ public class UserDAOBean {
             return null;
         } catch (Exception e) {
             System.out.println("Неизвестный Exception в UserDAOBean");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public User findUserByEmail(String email){
+        try {
+            User user = (User) em.createQuery("from User where email =:email").setParameter("email", email).getSingleResult();
+            return user;
+        } catch (EmptyResultDataAccessException e) {
+            return  null;
+        } catch (EntityNotFoundException e){
+            return null;
+        } catch (Exception e){
             System.out.println(e.getMessage());
             return null;
         }
@@ -66,24 +79,30 @@ public class UserDAOBean {
 
 
 
-    public List<Role> getUserRoles(int userId){
-        return em.createQuery("from TP1_USER_ROLE where user_id =:userId").setParameter("userId", userId).getResultList();
+    public List<Role> getRoles(){
+        return em.createQuery("from Role").getResultList();
     }
 
-    public User findUserByEmail(String email){
-        try {
-            User user = (User) em.createQuery("from User where email =:email").setParameter("email", email).getSingleResult();
-            return user;
+    public List<String> getRolesNames(){
+        return em.createQuery("select name from Role").getResultList();
+    }
+
+    public Role getRoleByName(String roleName){
+
+        try{
+            Role role = (Role) em.createQuery("from Role where name =:roleName").setParameter("roleName",roleName).getSingleResult();
+            return role;
         } catch (EmptyResultDataAccessException e) {
             return  null;
         } catch (EntityNotFoundException e){
+            System.out.println("Не найдена роль " + roleName);
             return null;
-        } catch (Exception e){
+        } catch (Exception e) {
+            System.out.println("Неизвестный Exception в UserDAOBean "  + roleName);
             System.out.println(e.getMessage());
             return null;
         }
     }
-
 
 //    Старая версия метода, до включения @Transactional
 //    public boolean saveAuthor (Author a) {

@@ -20,15 +20,17 @@ public class Role {
     @Column (nullable = false, length = 500)
     private String name;
 
-    @ManyToMany
-    @JoinTable (name="TP1_USER_ROLE",
-            joinColumns=@JoinColumn (name="role_id"),
-            inverseJoinColumns=@JoinColumn(name="user_id"))
+//    потом сделаем возможность выбирать несколько ролей для одного пользователя
+//    @ManyToMany
+//    @JoinTable (name="TP1_USER_ROLE",
+//            joinColumns=@JoinColumn (name="role_id"),
+//            inverseJoinColumns=@JoinColumn(name="user_id"))
+//    private List<User> users;
+
+    @OneToMany(mappedBy = "role")
     private List<User> users;
 
-    public Role() {
-        this.create_time = new Date();
-    }
+    public Role() { }
 
     public Role(String name) {
         this.name = name;

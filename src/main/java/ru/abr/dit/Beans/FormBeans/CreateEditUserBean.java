@@ -1,5 +1,7 @@
 package ru.abr.dit.Beans.FormBeans;
 
+import ru.abr.dit.Models.Role;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -36,6 +38,9 @@ public class CreateEditUserBean {
     private String photo;
 
     private String errorMessage;
+
+    @NotEmpty(message = "Значени не выбрано")
+    private String role;
 
     public CreateEditUserBean() {
     }
@@ -114,6 +119,14 @@ public class CreateEditUserBean {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setErrorMessage(String errorMessage) {
