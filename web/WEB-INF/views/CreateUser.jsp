@@ -1,15 +1,16 @@
-<%--
+﻿<%--
   Created by IntelliJ IDEA.
   User: maksimovich_y
   Date: 13.08.2019
   Time: 18:11
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="securety" uri="http://www.springframework.org/security/tags"%><!--все формы должны содержать токен-->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="securety" uri="http://www.springframework.org/security/tags"%><!--все формы должны содержать токен-->
 <%@ taglib prefix="form"  uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Create User</title>
 </head>
 <body>
@@ -18,8 +19,10 @@
 
 <form:form method="post"
            action="/createUser"
+           modelAttribute="newUser"
            enctype="application/x-www-form-urlencoded"
-           modelAttribute="newUser">
+           acceptCharset="UTF-8"
+>
     <p>
         <label for="email">Email</label>
         <form:input path="email" type="text" name="email"/>

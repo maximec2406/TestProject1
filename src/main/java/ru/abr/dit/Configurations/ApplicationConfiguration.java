@@ -1,7 +1,6 @@
 package ru.abr.dit.Configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,17 +8,15 @@ import org.springframework.context.annotation.Import;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import ru.abr.dit.DAO.MainDAOBean;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 @EnableWebMvc
 @ComponentScan("ru.abr.dit.*")
@@ -35,6 +32,7 @@ public class ApplicationConfiguration {
 //    }
 
 
+
     @Bean
     public EntityManagerFactory createEntityManagerFactory(){
         return Persistence.createEntityManagerFactory("PromPersistUnit");
@@ -48,6 +46,7 @@ public class ApplicationConfiguration {
     @Bean
     public ViewResolver createViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setContentType("text/html; charset=UTF-8");
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
