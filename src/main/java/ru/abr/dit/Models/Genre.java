@@ -2,6 +2,8 @@ package ru.abr.dit.Models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +22,15 @@ public class Genre {
     private Date create_time;
 
     @Column (nullable = false, unique = true)
+    @NotEmpty(message = "Не должно быть пустым")
     private String name;
 
-    @Column (nullable = false, unique = true)
-    private int code;
+    @Column
+    @NotEmpty(message = "Не должно быть пустым")
+    private String discription;
+
+//    @Column (nullable = false, unique = true)
+//    private int code;
 
     @ManyToMany
     @JoinTable (name="TP1_BOOK_GENRE",
@@ -32,6 +39,12 @@ public class Genre {
     private List<Genre> books;
 
     public Genre() {
+    }
+
+    public Genre(String name, String discription) {
+        this.name = name;
+        this.discription = discription;
+        this.create_time = new Date();
     }
 
     public int getId() {
@@ -50,13 +63,13 @@ public class Genre {
         this.name = name;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
+//    public int getCode() {
+//        return code;
+//    }
+//
+//    public void setCode(int code) {
+//        this.code = code;
+//    }
 
     public List<Genre> getBooks() {
         return books;
@@ -64,5 +77,13 @@ public class Genre {
 
     public void setBooks(List<Genre> books) {
         this.books = books;
+    }
+
+    public String getDiscription() {
+        return discription;
+    }
+
+    public void setDiscription(String discription) {
+        this.discription = discription;
     }
 }

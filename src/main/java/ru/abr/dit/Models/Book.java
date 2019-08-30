@@ -30,7 +30,7 @@ public class Book {
     @Column (nullable = false)
     private float rating;
 
-    @Column // сделай enum
+    @Column
     private String original_lang;
 
     @ManyToOne
@@ -46,6 +46,18 @@ public class Book {
     private List<Genre> genres;
 
     public Book() {
+    }
+
+    public Book(String name, String discription, String year, String original_lang, Author author, Genre genre ) {
+        this.name = name;
+        this.discription = discription;
+        this.year = year;
+        this.original_lang = original_lang;
+        this.author = author;
+        this.genres = new ArrayList<Genre>();
+        this.genres.add(genre);
+        this.create_time = new Date();
+        this.rating = 0;
     }
 
     public Book(String name) {
@@ -123,4 +135,5 @@ public class Book {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
+
 }

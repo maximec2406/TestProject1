@@ -6,15 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.abr.dit.Beans.FormBeans.AddAuthorFormBean;
-import ru.abr.dit.DAO.UserDAOBean;
 import ru.abr.dit.Enums.EnumCountry;
 import ru.abr.dit.Models.Author;
-
-
+import ru.abr.dit.Services.EntityService;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +22,7 @@ import java.util.Date;
 public class AuthorController {
 
     @Autowired
-    private UserDAOBean udb;
+    private EntityService es;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -33,28 +32,40 @@ public class AuthorController {
     }
 
     @Transactional
-    @RequestMapping(path="/manageAuthor", method = RequestMethod.POST)
+    @PostMapping(path="/createAuthor")
     public String addAuthor(@Valid @ModelAttribute(name = "authorModel") AddAuthorFormBean form, BindingResult br, ModelMap model){
 
         model.addAttribute("EnumCountry", EnumCountry.values());
 
-        // кастомные проверки
-//        br.addError(new FieldError("authorModel", "first_name","Дай имя"));
-//        br.addError(new FieldError("authorModel", "last_name","Give last_name"));
-        if (br.hasErrors()){
-            return "author";
+        if (!br.hasErrors()) {
+            try {
+                model.addAttribute("regime", "List");
+                es.createAuthor(new Author(form.getFirst_name(),
+                        form.getLast_name(),
+                        form.getPatronymic(),
+                        form.getBirthday(),
+                        form.getDeathday(),
+                        form.getAbout(),
+                        form.getPhoto(),
+                        EnumCountry.valueOf(form.getCountry()))
+                );
+                model.addAttribute("authors", es.getAllAuthorList());
+            } catch (Exception e) {
+                br.addError(new FieldError("authorModel", "errorMessage", "Не удалось сохранить Автора"));
+                model.addAttribute("regim", "Create");
+                System.out.println(e.getMessage());
+            }
         }
-
-        Author a = new Author(form.getFirst_name(),form.getLast_name(), form.getPatronymic(), form.getBirthday(),form.getDeathday(),form.getAbout(),form.getPhoto(), EnumCountry.valueOf(form.getCountry()));
-
-        return udb.createAuthor(a) ? "successAuthorSave" : "failAuthorSave";
+        return "author";
     }
 
 
-    @GetMapping(path="/manageAuthor")
+    @GetMapping(path="/author")
     public ModelAndView addAuthor(@ModelAttribute(name = "authorModel") AddAuthorFormBean form){
 
         ModelAndView model = new ModelAndView();
+        model.addObject("regime", "List");
+        model.addObject("authors", es.getAllAuthorList());
         model.setViewName("author");
         model.addObject("EnumCountry", EnumCountry.values());
         return model;

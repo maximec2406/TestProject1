@@ -1,27 +1,46 @@
 package ru.abr.dit.Controllers;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import java.io.IOException;
-
-
-@WebFilter("/*")
-public class EncodingFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig config) throws ServletException {
-        // NOOP.
-    }
-
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        chain.doFilter(request, response);
-    }
-
-    @Override
-    public void destroy() {
-        // NOOP.
-    }
-}
+//import javax.servlet.FilterChain;
+//import javax.servlet.ServletException;
+//import javax.servlet.annotation.WebFilter;
+//import javax.servlet.http.HttpFilter;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import java.io.IOException;
+//
+//
+//@WebFilter(urlPatterns = "/*")
+//public class EncodingFilter extends HttpFilter {
+//    @Override
+//    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+//
+//        req.setCharacterEncoding ("UTF-8");
+////        res.setCharacterEncoding ("UTF-8");
+//
+//        super.doFilter(req, res, chain);
+//    }
+//}
+//import javax.servlet.*;
+//import javax.servlet.annotation.WebFilter;
+//import java.io.IOException;
+//
+//
+//@WebFilter("/*")
+//public class EncodingFilter implements Filter {
+//
+//    @Override
+//    public void init(FilterConfig config) throws ServletException {
+//        //NOOP.
+//    }
+//
+//    @Override
+//    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+//        req.setCharacterEncoding("UTF-8");
+//        chain.doFilter(req, resp);
+//    }
+//
+//    @Override
+//    public void destroy() {
+//        // NOOP.
+//    }
+//}

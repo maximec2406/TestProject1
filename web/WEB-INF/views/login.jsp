@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Welcome!</title>
+    <title>Sign in</title>
 </head>
 <body>
 
@@ -20,10 +20,12 @@
            enctype="application/x-www-form-urlencoded"
            modelAttribute="loginForm">
     <p>
+        <label for="username">Пользователь</label>
         <form:input path="username" type="text" name="username"/>
         <form:errors path="username" type="text" />
     </p>
     <p>
+        <label for="username">Пароль</label>
         <form:input path="password" type="password" name="password"/>
         <form:errors path="password" type="text"/>
     </p>

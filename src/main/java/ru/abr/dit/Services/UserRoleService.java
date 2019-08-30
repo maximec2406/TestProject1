@@ -8,22 +8,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.abr.dit.DAO.UserDAOBean;
-import ru.abr.dit.Models.Role;
+import ru.abr.dit.DAO.MainDAO;
 import ru.abr.dit.Models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
 public class UserRoleService implements UserDetailsService {
 
     @Autowired
-    private UserDAOBean userDAOBean;
+    private MainDAO md;
 
     @PersistenceContext
     private EntityManager em;
@@ -33,7 +31,7 @@ public class UserRoleService implements UserDetailsService {
         ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
 
         try {
-            User user = userDAOBean.findUserByEmail(email);
+            User user = md.findUserByEmail(email);
 
            switch (user.getRole().getName()){
                case "Администратор":
