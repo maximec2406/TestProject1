@@ -22,7 +22,7 @@ public class BookController {
     @GetMapping(path = "/book")
     public ModelAndView getBooksList() {
         ModelAndView model = new ModelAndView();
-        model.addObject("regim","List");
+        model.addObject("regime","List");
         model.addObject("books", es.getBookList());
         model.setViewName("book");
         return model;
@@ -54,7 +54,7 @@ public class BookController {
                         es.getGenreByName(form.getGenre())
                 ));
                 model.addObject("books", es.getBookList());
-                model.addObject("regim", "List");
+                model.addObject("regime", "List");
             } catch (Exception e) {
                 br.addError(new FieldError("bookModel", "errorMessage", "Не удалось сохранить Книгу"));
                 addObjectsToModel(model);
@@ -67,7 +67,7 @@ public class BookController {
     }
 
     public void addObjectsToModel(ModelAndView model){
-        model.addObject("regim", "Create");
+        model.addObject("regime", "Create");
         model.addObject("Languages", es.languagesFields());
         model.addObject("Genres", es.getGenresNames());
         model.addObject("Authors", es.getAuthorsNames());

@@ -15,16 +15,16 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${regim == 'List'}">
+    <c:when test="${regime == 'List'}">
         <p>List</p>
         <a href="/createAuthor"><button>Добавить Автора</button></a>
         <c:forEach items="${authors}" var="author" >
             <p>
-                <span>${author.first_name}</span><span>${author.author.last_name}</span>
+                <span>${author.first_name}</span><span>${author.last_name}</span>
             </p>
         </c:forEach>
     </c:when>
-    <c:when test="${regim == 'Create'}">
+    <c:when test="${regime == 'Create'}">
         <p>Create</p>
         <a href="/books"><button>Список Авторов</button></a>
         <form:form method="post"

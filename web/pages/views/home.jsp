@@ -19,10 +19,10 @@
 <a href="/friends">Друзья</a>
 <a href="/recomends">Рекомендации</a>
 <a href="/search">Поиск</a>
-<c:if test="${ROLE==ADMIN}">
+<c:if test="${ROLE=='ADMIN'}">
     <a href="/admin/admin">Админка</a>
 </c:if>
-<c:if test="${ROLE==USER}">
+<c:if test="${ROLE=='USER'}">
     <p>Пользователь</p>
 </c:if>
 </body>

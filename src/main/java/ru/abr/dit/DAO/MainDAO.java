@@ -1,6 +1,6 @@
 package ru.abr.dit.DAO;
 
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.abr.dit.Models.*;
@@ -86,7 +86,7 @@ public class MainDAO {
 
 //    Genre start
 
-    public List<Genre> getAllGenreList(){return em.createQuery("from Genre").getResultList() ; }
+    public List<Genre> getAllGenreList(){return em.createQuery("from Genre order by name").getResultList() ; }
     public List<String> getGenresNames() {return em.createQuery("select name from Genre").getResultList() ; }
 
     public Genre getGenreByName(String name) {
@@ -101,6 +101,16 @@ public class MainDAO {
         }
     }
 
+    public Genre getGenreById(int Id) {
+        try {
+            return (Genre) em.createQuery("from Genre where id=:id").setParameter("id", Id).getSingleResult();
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
     public void createGenre (Genre genre){
         try {
             em.persist(genre);
@@ -109,7 +119,29 @@ public class MainDAO {
         }
     }
 
-    public List<String> getAuthorsNames(){ return em.createQuery("select last_name from Author").getResultList() ; };
+    public List<String> getAuthorsNames(){ return em.createQuery("select last_name from Author").getResultList() ; }
+
+    public boolean deleteGenre(String name) {
+
+        try {
+            em.remove(getGenreByName(name));
+            return true;
+        } catch (Exception e) {
+            System.out.println("MainDAO.deleteGenre. " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public boolean updateGenre(Genre genre){
+        try {
+            em.merge(genre);
+        } catch (Exception e){
+            System.out.println("MainDAO.updateGenre. " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
 //    Genre end
 

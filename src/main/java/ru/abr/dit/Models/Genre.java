@@ -22,11 +22,9 @@ public class Genre {
     private Date create_time;
 
     @Column (nullable = false, unique = true)
-    @NotEmpty(message = "Не должно быть пустым")
     private String name;
 
     @Column
-    @NotEmpty(message = "Не должно быть пустым")
     private String discription;
 
 //    @Column (nullable = false, unique = true)

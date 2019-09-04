@@ -53,7 +53,9 @@ public class SecurityConfigeration extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.authorizeRequests()
-                .antMatchers("/", "/static/**", "/login", "/signin", "/home").permitAll();
+                .antMatchers("/", "/static/**", "/login", "/signin", "/home", "/deleteGenge").permitAll();
+
+        http.cors();
 
 ////        настройка цепочек проверок
 //        http.authorizeRequests()

@@ -31,9 +31,19 @@ public class AuthorController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
-    @Transactional
+    @GetMapping(path="/createAuthor")
+    public ModelAndView getCreateAuthorForm(@ModelAttribute(name = "authorModel") AddAuthorFormBean form){
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("regime", "Create");
+//        model.addObject("authors", es.getAllAuthorList());
+        model.setViewName("author");
+        model.addObject("EnumCountry", EnumCountry.values());
+        return model;
+    }
+
     @PostMapping(path="/createAuthor")
-    public String addAuthor(@Valid @ModelAttribute(name = "authorModel") AddAuthorFormBean form, BindingResult br, ModelMap model){
+    public String createAuthor(@Valid @ModelAttribute(name = "authorModel") AddAuthorFormBean form, BindingResult br, ModelMap model){
 
         model.addAttribute("EnumCountry", EnumCountry.values());
 
@@ -52,7 +62,7 @@ public class AuthorController {
                 model.addAttribute("authors", es.getAllAuthorList());
             } catch (Exception e) {
                 br.addError(new FieldError("authorModel", "errorMessage", "Не удалось сохранить Автора"));
-                model.addAttribute("regim", "Create");
+                model.addAttribute("regime", "Create");
                 System.out.println(e.getMessage());
             }
         }

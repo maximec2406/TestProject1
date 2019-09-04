@@ -72,6 +72,12 @@ public class EntityService {
 
     public void createGenre(Genre genre){ md.createGenre(genre); }
 
+    public boolean deleteGenre(String name) {return md.deleteGenre(name); }
+
+    public boolean updateGenre (Genre genre) {return md.updateGenre(genre); }
+
+    public Genre getGenreById (int id) {return  md.getGenreById(id); }
+
 //    Genre end
 
 //    Roles start

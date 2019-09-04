@@ -8,7 +8,7 @@
 <body>
 <p>Пользователь</p>
 <c:choose>
-    <c:when test="${regim == 'List'}">
+    <c:when test="${regime == 'List'}">
         <p>List</p>
         <a href="/createUser"><button>Добавить пользователя</button></a>
         <c:forEach items="${users}" var="user" >
@@ -17,7 +17,7 @@
             </p>
         </c:forEach>
     </c:when>
-    <c:when test="${regim == 'Create'}">
+    <c:when test="${regime == 'Create' || regime == 'Edit'}">
         <p>Create</p>
         <a href="/admin/user"><button>Список пользователей</button></a>
         <form:form method="post"

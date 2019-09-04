@@ -9,7 +9,7 @@
 <body>
 <p>Книги</p>
 <c:choose>
-    <c:when test="${regim == 'List'}">
+    <c:when test="${regime == 'List'}">
         <p>List</p>
         <a href="/createBook"><button>Добавить книгу</button></a>
         <c:forEach items="${books}" var="book" >
@@ -18,7 +18,7 @@
             </p>
         </c:forEach>
     </c:when>
-    <c:when test="${regim == 'Create'}">
+    <c:when test="${regime == 'Create'}">
         <p>Create</p>
         <a href="/book"><button>Список книг</button></a>
         <form:form enctype="application/x-www-form-urlencoded"

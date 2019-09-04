@@ -44,10 +44,19 @@ public class UserController {
     }
 
     @GetMapping(path = "/admin/user")
-    public ModelAndView getNewUserForm(){
+    public ModelAndView getUserList(){
         ModelAndView model = new ModelAndView();
         model.setViewName("admin/user");
         addObjectsToModel(model);
+        return model;
+    }
+
+    @GetMapping(path = "/createUser")
+    public ModelAndView getNewUserForm(@ModelAttribute(name = "userModel") CreateEditUserBean form){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("admin/user");
+        addObjectsToModel(model);
+        model.addObject("regime","Create");
         return model;
     }
 
@@ -92,12 +101,12 @@ public class UserController {
     public void addObjectsToModel(ModelAndView model){
         model.addObject("Roles", es.getRolesNames());
         model.addObject("users",es.getAllUserList());
-        model.addObject("regim","List");
+        model.addObject("regime","List");
     }
 
     public void addObjectsToModel(ModelMap model){
         model.addAttribute("Roles", es.getRolesNames());
         model.addAttribute("users",es.getAllUserList());
-        model.addAttribute("regim","List");
+        model.addAttribute("regime","List");
     }
 }
