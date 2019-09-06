@@ -13,19 +13,27 @@
 <head>
     <title>Genre</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="http://localhost:8080/static/css/main.css" type="text/css">
+    <link rel="stylesheet" href="http://localhost:8585/static/css/main.css" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="http://localhost:8585/static/javascript/main.js"></script>
     <securety:csrfMetaTags/>
-<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>--%>
-    <script src="http://localhost:8080/static/javascript/main.js"></script>
 </head>
 <body>
     <div class="abr-content-head">
-        <div>
-            <p>Жанры</p>
-        </div>
-        <div>
-            <a href="/home" >Главная</a>
+        <div class="abr-content-head-nav">
+            <div>
+                <p>Жанры</p>
+            </div>
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="col s12">
+                        <a href="/home" class="breadcrumb">Главная</a>
+                        <a href="/admin/admin" class="breadcrumb">Администирование</a>
+                        <a href="#" class="breadcrumb">Жанры</a>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
     <div class="abr-content-body">
@@ -42,9 +50,7 @@
                 <div class="abr-list-body">
                     <div class="collection">
                         <c:forEach items="${genres}" var="genre" >
-                            <p>
-                                <a class="collection-item" href='http://localhost:8080/editGenre?name=${genre.name}' >${genre.name}</a>
-                            </p>
+                            <a href="http://localhost:8585/editGenre?id=${genre.id}" class="collection-item">${genre.name}</a>
                         </c:forEach>
                     </div>
                 </div>

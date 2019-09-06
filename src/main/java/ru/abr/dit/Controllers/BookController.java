@@ -8,10 +8,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.abr.dit.Beans.FormBeans.CreateEditBookBean;
+import ru.abr.dit.Beans.FormBeans.BookFormBean;
 import ru.abr.dit.Models.Book;
+import ru.abr.dit.Models.Genre;
 import ru.abr.dit.Services.EntityService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BookController {
@@ -29,47 +34,117 @@ public class BookController {
     }
 
     @GetMapping(path = "/createBook")
-    public ModelAndView getCreateBookForm(@ModelAttribute (name="bookModel")CreateEditBookBean form){
+    public ModelAndView getCreateBookForm(@ModelAttribute (name="bookModel") BookFormBean form){
         ModelAndView model = new ModelAndView();
+        model.addObject("regime", "Create");
         addObjectsToModel(model);
+        form.setId(0);
         model.setViewName("book");
         return model;
     }
 
-    @PostMapping(path = "/createBook")
-    public ModelAndView createBook(@Validated @ModelAttribute (name="bookModel") CreateEditBookBean form, BindingResult br){
+    @GetMapping(path = "/editBook")
+    public ModelAndView getEditBookForm(@ModelAttribute (name="bookModel") BookFormBean form, @RequestParam int id){
 
         ModelAndView model = new ModelAndView();
-
-        if(es.hasBookName(form.getName()))
-            br.addError(new FieldError("newBook","name","Книга с таким наименованием уже существует"));
-
-        if (!br.hasErrors()) {
-            try {
-                es.createBook(new Book(form.getName(),
-                        form.getDiscription(),
-                        form.getYear(),
-                        form.getOriginal_lang(),
-                        es.getAutorByName(form.getAuthor()),
-                        es.getGenreByName(form.getGenre())
-                ));
-                model.addObject("books", es.getBookList());
-                model.addObject("regime", "List");
-            } catch (Exception e) {
-                br.addError(new FieldError("bookModel", "errorMessage", "Не удалось сохранить Книгу"));
-                addObjectsToModel(model);
-            }
-        } else
-            addObjectsToModel(model);
-
         model.setViewName("book");
+        model.addObject("regime","Edit");
+        addObjectsToModel(model);
+        Book book = es.findBookById(id);
+        if (book != null) {
+            bookToForm(book, form);
+        } else
+            model.addObject("regime","Create");
+        return model;
+    }
+
+
+    @PostMapping(path = "/saveBook")
+    public ModelAndView createBook(@Validated @ModelAttribute (name="bookModel") BookFormBean form, BindingResult br){
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("book");
+        model.addObject("regime","Edit");
+        addObjectsToModel(model);
+
+        // 0 - сущность новая
+        if (form.getId() != 0){
+
+            Book book = es.findBookById(form.getId());
+
+            if(es.hasBookName(form.getName()) && !form.getName().equals(book.getName()))
+                br.addError(new FieldError("newBook","name","Книга с таким наименованием уже существует"));
+
+            if (!br.hasErrors()){
+                formToBook(form, book);
+
+                if (es.updateBook(book))
+                    model.addObject("saveResult", "Изменения сохранены");
+                else {
+                    br.addError(new FieldError("userModel", "errorMessage", "Не удалось сохранить Пользователя"));
+                }
+            }
+        } else {
+
+            if(es.hasBookName(form.getName()))
+                br.addError(new FieldError("newBook","name","Книга с таким наименованием уже существует"));
+
+            if (!br.hasErrors()) {
+                try {
+                    es.createBook(new Book(form.getName(),
+                            form.getDiscription(),
+                            form.getYear(),
+                            form.getOriginal_lang(),
+                            es.getAutorByName(form.getAuthor()),
+                            es.getGenreByName(form.getGenre())
+                    ));
+                    model.clear();
+                    model.addObject("books", es.getBookList());
+                    model.addObject("regime", "List");
+                    model.setViewName("book");
+                } catch (Exception e) {
+                    br.addError(new FieldError("bookModel", "errorMessage", "Не удалось сохранить Книгу"));
+                    model.addObject("regime","Create");
+                }
+            } else
+                model.addObject("regime","Create");
+        }
         return model;
     }
 
     public void addObjectsToModel(ModelAndView model){
-        model.addObject("regime", "Create");
         model.addObject("Languages", es.languagesFields());
         model.addObject("Genres", es.getGenresNames());
         model.addObject("Authors", es.getAuthorsNames());
     }
+
+    public void bookToForm(Book book, BookFormBean form){
+
+        form.setAuthor(book.getAuthor().getFullName());
+        form.setDiscription(book.getDiscription());
+        form.setGenre(book.getGenres().get(0).getName());
+        form.setName(book.getName());
+        form.setOriginal_lang(book.getOriginal_lang());
+        form.setYear(book.getYear());
+    }
+
+    public void formToBook(BookFormBean form, Book book){
+
+        book.setAuthor(es.findAutorById(form.getAuthorId()));
+        book.setDiscription(form.getDiscription());
+        List<Genre> g = new ArrayList<Genre>();
+        g.add(es.getGenreByName(form.getGenre()));
+        book.setGenres(g);
+        book.setName(form.getName());
+        book.setOriginal_lang(form.getOriginal_lang());
+        book.setYear(form.getYear());
+    }
+
+    public Book formToNewBook(BookFormBean form){
+
+        Book book = new Book();
+        return book;
+    }
+
+
 }

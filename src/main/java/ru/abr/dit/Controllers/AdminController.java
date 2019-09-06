@@ -26,6 +26,7 @@ public class AdminController {
 
     @GetMapping(path="/admin/genre")
     public ModelAndView getGenreList(){
+
         ModelAndView model = new ModelAndView();
         model.addObject("regime","List");
         model.addObject("genres", es.getGenreList());
@@ -44,9 +45,9 @@ public class AdminController {
     }
 
     @GetMapping(path="/editGenre")
-    public ModelAndView getEditGenreForm(@ModelAttribute(name = "genreModel") GenreFormBean form, @RequestParam String name){
+    public ModelAndView getEditGenreForm(@ModelAttribute(name = "genreModel") GenreFormBean form, @RequestParam int id){
 
-        Genre genre = es.getGenreByName(name);
+        Genre genre = es.getGenreById(id);
         form.setName(genre.getName());
         form.setDiscription(genre.getDiscription());
         form.setId(genre.getId());
@@ -99,7 +100,7 @@ public class AdminController {
     public void deleteGenre(@ModelAttribute(name = "genreModel") GenreFormBean form, HttpServletResponse response) throws IOException {
 
         try{
-            es.deleteGenre(form.getName());
+            es.deleteGenre(form.getId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

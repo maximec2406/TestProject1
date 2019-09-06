@@ -1,7 +1,9 @@
-function deleteGenre(str){
-   postGenre('http://localhost:8080/deleteGenre', str);
+if (typeof M !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
 }
-
 function editGenre(str) {
     var token = document.querySelector("meta[name='_csrf']").getAttribute("content");
     var header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
@@ -19,23 +21,4 @@ function editGenre(str) {
         }
     }
     xhr.send();
-}
-
-function postGenre(url, str) {
-    var token = document.querySelector("meta[name='_csrf']").getAttribute("content");
-    var header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
-    var xhr = new XMLHttpRequest();
-
-    var body = 'name=' + encodeURIComponent(str);
-
-    xhr.open("post", url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader(header,token);
-    xhr.onreadystatechange = function() {
-        if (xhr.status === 200 && xhr.readyState === 4 ) {
-            alert("Изменения сохранены")
-            document.location.href = xhr.responseURL;
-        }
-    }
-    xhr.send(body);
 }

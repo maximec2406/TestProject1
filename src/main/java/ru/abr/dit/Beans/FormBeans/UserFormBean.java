@@ -6,13 +6,14 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class CreateEditUserBean {
+public class UserFormBean {
+
+    private int id;
 
     @NotEmpty (message = "Поле не должно быть пустым")
     @Size (min=3, message = "Значение в поле слишком короткое")
     private String email;
 
-    @Size (min=3, message = "Значение в поле слишком короткое")
     private String password;
 
     private String secPassword;
@@ -41,7 +42,7 @@ public class CreateEditUserBean {
     @NotEmpty(message = "Значени не выбрано")
     private String role;
 
-    public CreateEditUserBean() {
+    public UserFormBean() {
     }
 
     public String getEmail() {
@@ -130,5 +131,13 @@ public class CreateEditUserBean {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

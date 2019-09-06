@@ -2,7 +2,9 @@ package ru.abr.dit.Beans.FormBeans;
 
 import javax.validation.constraints.NotEmpty;
 
-public class CreateEditBookBean {
+public class BookFormBean {
+
+    private int id;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     private String name;
@@ -19,12 +21,14 @@ public class CreateEditBookBean {
     @NotEmpty(message = "Поле не должно быть пустым")
     private String author;
 
+    private int authorId;
+
     @NotEmpty(message = "Поле не должно быть пустым")
     private String genre;
 
     private String errorMessage;
 
-    public CreateEditBookBean() {
+    public BookFormBean() {
     }
 
     public String getName() {
@@ -67,6 +71,14 @@ public class CreateEditBookBean {
         this.author = author;
     }
 
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
     public String getGenre() {
         return genre;
     }
@@ -81,5 +93,13 @@ public class CreateEditBookBean {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

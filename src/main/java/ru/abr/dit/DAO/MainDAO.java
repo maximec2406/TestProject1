@@ -55,6 +55,15 @@ public class MainDAO {
         }
     }
 
+    public Author findAutorById(int id){
+        try{
+            return (Author) em.createQuery("from Author where id=:id").setParameter("id", id).getSingleResult();
+        } catch (Exception e){
+            System.out.println("MainDAO.findAutorById. " + e.getMessage());
+            return null;
+        }
+    }
+
 //    Author end
 
 
@@ -80,6 +89,26 @@ public class MainDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public Book findBookById(int id) {
+        try{
+            return (Book) em.createQuery("from Book where id=:id").setParameter("id", id).getSingleResult();
+        } catch (Exception e){
+            System.out.println("MainDAO.findBookById. " + e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean updateBook(Book book){
+        try{
+            em.merge(book);
+            return true;
+        } catch (Exception e) {
+            System.out.println("MainDAO.updateBook. " + e.getMessage());
+            return false;
+        }
+
     }
 
 //    Book end
@@ -121,10 +150,10 @@ public class MainDAO {
 
     public List<String> getAuthorsNames(){ return em.createQuery("select last_name from Author").getResultList() ; }
 
-    public boolean deleteGenre(String name) {
+    public boolean deleteGenre(int id) {
 
         try {
-            em.remove(getGenreByName(name));
+            em.remove(getGenreById(id));
             return true;
         } catch (Exception e) {
             System.out.println("MainDAO.deleteGenre. " + e.getMessage());
@@ -146,6 +175,15 @@ public class MainDAO {
 //    Genre end
 
 //    User start
+
+    public User findUserById(int id) {
+        try{
+            return (User) em.createQuery("from User where id=:id").setParameter("id", id).getSingleResult();
+        } catch (Exception e){
+            System.out.println("MainDAO.findUserById. " + e.getMessage());
+            return null;
+        }
+    }
 
     public User findUserByNickname(String nickname){
         try {
@@ -176,6 +214,36 @@ public class MainDAO {
     }
 
     public List<User> getAllUserList() {return em.createQuery("from User").getResultList(); }
+
+    public boolean editUser(int id) {
+        try{
+            em.merge(findUserById(id));
+            return true;
+        } catch (Exception e){
+            System.out.println("MainDAO.deleteUser. " + e.getMessage());
+            return false;
+        }
+    }
+    public boolean deleteUser(User user) {
+        try{
+            em.remove(user);
+            return true;
+        } catch (Exception e){
+            System.out.println("MainDAO.deleteUser. " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateUser(User user){
+        try {
+            em.merge(user);
+        } catch (Exception e){
+            System.out.println("MainDAO.updateUser. " + e.getMessage());
+            return false;
+        }
+        return true;
+
+    }
 
 //    User end
 

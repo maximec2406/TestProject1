@@ -32,6 +32,8 @@ public class EntityService {
 
     public Author getAutorByName(String name) {return md.getAutorByName(name) ; }
 
+    public Author findAutorById(int id){return md.findAutorById(id); }
+
 //    Author end
 
 //    Book start
@@ -44,6 +46,10 @@ public class EntityService {
 
     public boolean hasBookName(String name){ return md.getBookByName(name) != null ; }
 
+    public Book findBookById(int id) { return md.findBookById(id); }
+
+    public boolean updateBook (Book book) {return md.updateBook(book); }
+
 //    Book end
 
 //    User start
@@ -55,6 +61,12 @@ public class EntityService {
     public boolean createUser(User user) {return md.createUser(user); }
 
     public List<User> getAllUserList() { return md.getAllUserList();}
+
+    public User findUserById(int id) { return md.findUserById(id); }
+
+    public boolean deleteUser(User user) {return md.deleteUser(user); }
+
+    public boolean updateUser(User user) {return md.updateUser(user); }
 
 //    User end
 
@@ -72,7 +84,7 @@ public class EntityService {
 
     public void createGenre(Genre genre){ md.createGenre(genre); }
 
-    public boolean deleteGenre(String name) {return md.deleteGenre(name); }
+    public boolean deleteGenre(int id) {return md.deleteGenre(id); }
 
     public boolean updateGenre (Genre genre) {return md.updateGenre(genre); }
 

@@ -166,4 +166,6 @@ public class Author {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    public String getFullName(){return this.last_name + " " + this.getFirst_name() + " " + this.getPatronymic(); }
 }
