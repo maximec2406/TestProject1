@@ -15,6 +15,8 @@ import ru.abr.dit.Models.Book;
 import ru.abr.dit.Models.Genre;
 import ru.abr.dit.Services.EntityService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,7 @@ public class BookController {
         Book book = es.findBookById(id);
         if (book != null) {
             bookToForm(book, form);
+            model.addObject("AuthorName",book.getAuthor().getFullName());
         } else
             model.addObject("regime","Create");
         return model;
@@ -73,7 +76,7 @@ public class BookController {
             Book book = es.findBookById(form.getId());
 
             if(es.hasBookName(form.getName()) && !form.getName().equals(book.getName()))
-                br.addError(new FieldError("newBook","name","Книга с таким наименованием уже существует"));
+                br.addError(new FieldError("bookModel","name","Книга с таким наименованием уже существует"));
 
             if (!br.hasErrors()){
                 formToBook(form, book);
@@ -81,13 +84,13 @@ public class BookController {
                 if (es.updateBook(book))
                     model.addObject("saveResult", "Изменения сохранены");
                 else {
-                    br.addError(new FieldError("userModel", "errorMessage", "Не удалось сохранить Пользователя"));
+                    br.addError(new FieldError("bookModel", "errorMessage", "Не удалось сохранить Книгу"));
                 }
             }
         } else {
 
             if(es.hasBookName(form.getName()))
-                br.addError(new FieldError("newBook","name","Книга с таким наименованием уже существует"));
+                br.addError(new FieldError("bookModel","name","Книга с таким наименованием уже существует"));
 
             if (!br.hasErrors()) {
                 try {
@@ -95,7 +98,7 @@ public class BookController {
                             form.getDiscription(),
                             form.getYear(),
                             form.getOriginal_lang(),
-                            es.getAutorByName(form.getAuthor()),
+                            es.findAutorById(Integer.valueOf(form.getAuthor()).intValue()),
                             es.getGenreByName(form.getGenre())
                     ));
                     model.clear();
@@ -112,15 +115,25 @@ public class BookController {
         return model;
     }
 
+    @PostMapping(path = "/deleteBook")
+    public void deleteBook(@ModelAttribute BookFormBean form, HttpServletResponse response) throws IOException {
+        try {
+            es.deleteBookById(form.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        response.sendRedirect("book");
+    }
+
     public void addObjectsToModel(ModelAndView model){
         model.addObject("Languages", es.languagesFields());
         model.addObject("Genres", es.getGenresNames());
-        model.addObject("Authors", es.getAuthorsNames());
+        model.addObject("Authors", es.getAllAuthorList());
     }
 
     public void bookToForm(Book book, BookFormBean form){
 
-        form.setAuthor(book.getAuthor().getFullName());
+        form.setAuthor(book.getAuthor().getId());
         form.setDiscription(book.getDiscription());
         form.setGenre(book.getGenres().get(0).getName());
         form.setName(book.getName());
@@ -130,7 +143,7 @@ public class BookController {
 
     public void formToBook(BookFormBean form, Book book){
 
-        book.setAuthor(es.findAutorById(form.getAuthorId()));
+        book.setAuthor(es.findAutorById(Integer.valueOf(form.getAuthor()).intValue()));
         book.setDiscription(form.getDiscription());
         List<Genre> g = new ArrayList<Genre>();
         g.add(es.getGenreByName(form.getGenre()));
@@ -139,12 +152,4 @@ public class BookController {
         book.setOriginal_lang(form.getOriginal_lang());
         book.setYear(form.getYear());
     }
-
-    public Book formToNewBook(BookFormBean form){
-
-        Book book = new Book();
-        return book;
-    }
-
-
 }

@@ -1,5 +1,7 @@
 package ru.abr.dit.Beans.FormBeans;
 
+import ru.abr.dit.Models.Author;
+
 import javax.validation.constraints.NotEmpty;
 
 public class BookFormBean {
@@ -18,10 +20,7 @@ public class BookFormBean {
     @NotEmpty(message = "Поле не должно быть пустым")
     private String original_lang;
 
-    @NotEmpty(message = "Поле не должно быть пустым")
-    private String author;
-
-    private int authorId;
+    private int author;
 
     @NotEmpty(message = "Поле не должно быть пустым")
     private String genre;
@@ -63,20 +62,12 @@ public class BookFormBean {
         this.original_lang = original_lang;
     }
 
-    public String getAuthor() {
+    public int getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(int author) {
         this.author = author;
-    }
-
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
     }
 
     public String getGenre() {

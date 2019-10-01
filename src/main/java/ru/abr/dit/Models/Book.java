@@ -1,5 +1,7 @@
 package ru.abr.dit.Models;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +41,7 @@ public class Book {
     @OneToMany (mappedBy = "book")
     private List<Review> reviews;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable (name="TP1_BOOK_GENRE",
             joinColumns=@JoinColumn (name="book_id"),
             inverseJoinColumns=@JoinColumn(name="genre_id"))
@@ -128,6 +130,7 @@ public class Book {
         this.reviews = reviews;
     }
 
+    @Transactional
     public List<Genre> getGenres() {
         return genres;
     }

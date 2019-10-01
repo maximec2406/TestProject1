@@ -3,7 +3,9 @@ package ru.abr.dit.Beans.FormBeans;
 import javax.validation.constraints.*;
 import java.util.Date;
 
-public class AddAuthorFormBean {
+public class AuthorFormBean {
+
+    private int id;
 
     @NotEmpty(message = "Поле не может быть пустым")
     private String first_name;
@@ -27,7 +29,15 @@ public class AddAuthorFormBean {
 
     private String country;
 
-    public AddAuthorFormBean() {
+    public AuthorFormBean() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirst_name() {

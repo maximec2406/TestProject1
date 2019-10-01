@@ -34,7 +34,7 @@ public class Genre {
     @JoinTable (name="TP1_BOOK_GENRE",
             joinColumns=@JoinColumn (name="genre_id"),
             inverseJoinColumns=@JoinColumn(name="book_id"))
-    private List<Genre> books;
+    private List<Book> books;
 
     public Genre() {
     }
@@ -69,11 +69,11 @@ public class Genre {
 //        this.code = code;
 //    }
 
-    public List<Genre> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Genre> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

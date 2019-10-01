@@ -3,6 +3,7 @@ package ru.abr.dit.DAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.abr.dit.Beans.FormBeans.AuthorFormBean;
 import ru.abr.dit.Models.*;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+
 
 @Service
 @Transactional
@@ -46,11 +48,8 @@ public class MainDAO {
     public Author getAutorByName(String name) {
         try {
             return (Author) em.createQuery("from Author where last_name=:name").setParameter("name", name).getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println("Не найден автор,");
-            return null;
-        } catch (EntityNotFoundException e) {
-            System.out.println("Не найден автор");
+        } catch (Exception e) {
+            System.out.println("MainDAO. Не найден автор. " + e.getMessage() );
             return null;
         }
     }
@@ -61,6 +60,52 @@ public class MainDAO {
         } catch (Exception e){
             System.out.println("MainDAO.findAutorById. " + e.getMessage());
             return null;
+        }
+    }
+    public List<String> getAuthorsNames(){ return em.createQuery("select last_name from Author").getResultList() ; }
+
+    public boolean hasSameAuthor(AuthorFormBean form){
+        try{
+            if (em.createQuery("from Author where id!=:id and last_name=:last_name and first_name=:first_name and birthday=:birthday")
+                    .setParameter("id", form.getId())
+                    .setParameter("last_name", form.getLast_name())
+                    .setParameter("first_name", form.getFirst_name())
+                    .setParameter("birthday", form.getBirthday())
+                    .getResultList()
+                    .size() > 0)
+                return true;
+            else
+                return false;
+        } catch (NoResultException e){
+            System.out.println("MainDAO.hasSameAuthor. " + e.getMessage());
+            return false;
+        } catch (EntityNotFoundException e){
+            System.out.println("MainDAO.hasSameAuthor. " + e.getMessage());
+            return false;
+        }
+        catch (Exception e){
+            System.out.println("MainDAO.hasSameAuthor. " + e.getMessage());
+            return true;
+        }
+    }
+
+    public boolean saveAuthor(Author author) {
+        try{
+            em.merge(author);
+            return true;
+        } catch (Exception e){
+            System.out.println("MainDAO.saveAuthor. " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteAuthor(int id){
+        try{
+            em.remove(findAutorById(id));
+            return true;
+        } catch (Exception e){
+            System.out.println("MainDAO.deleteAuthor. " + e.getMessage());
+            return false;
         }
     }
 
@@ -111,6 +156,16 @@ public class MainDAO {
 
     }
 
+    public boolean deleteBookById(int id) {
+        try{
+            em.remove(findBookById(id));
+            return true;
+        } catch (Exception e) {
+            System.out.println("MainDAO.deleteBook. " + e.getMessage());
+            return false;
+        }
+    }
+
 //    Book end
 
 //    Genre start
@@ -148,7 +203,7 @@ public class MainDAO {
         }
     }
 
-    public List<String> getAuthorsNames(){ return em.createQuery("select last_name from Author").getResultList() ; }
+
 
     public boolean deleteGenre(int id) {
 

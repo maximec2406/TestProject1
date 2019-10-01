@@ -2,10 +2,11 @@ package ru.abr.dit.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.abr.dit.Beans.FormBeans.AuthorFormBean;
 import ru.abr.dit.DAO.MainDAO;
 import ru.abr.dit.Models.*;
-
 import java.util.List;
+
 
 @Service
 public class EntityService {
@@ -34,6 +35,13 @@ public class EntityService {
 
     public Author findAutorById(int id){return md.findAutorById(id); }
 
+    public boolean hasSameAuthor(AuthorFormBean form) {return md.hasSameAuthor(form);}
+
+    public boolean saveAuthor(Author author) {return md.saveAuthor(author); }
+
+    public boolean deleteAuthor(int id) {return md.deleteAuthor(id);}
+
+
 //    Author end
 
 //    Book start
@@ -49,6 +57,8 @@ public class EntityService {
     public Book findBookById(int id) { return md.findBookById(id); }
 
     public boolean updateBook (Book book) {return md.updateBook(book); }
+
+    public boolean deleteBookById (int id) {return md.deleteBookById(id); }
 
 //    Book end
 

@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </c:when>
-            <c:when test="${regime == 'Create'}">
+            <c:when test="${regime == 'Create' || regime == 'Edit'}">
                 <div class="abr-list-head">
                     <div >
                         <h3>Добавить Книгу</h3>
@@ -68,42 +68,41 @@
                         <p>
                             <label for="name">Наименование книги</label>
                             <form:input path="name" type="text"/>
-                            <form:errors path="name" />
+                            <form:errors path="name" cssClass="abr-error-message"/>
                         </p>
                         <p>
                             <label for="discription">Описание</label>
                             <form:input path="discription" type="text" />
-                            <form:errors path="discription"/>
+                            <form:errors path="discription" cssClass="abr-error-message"/>
                         </p>
                         <p>
                             <label for="year">Год издания</label>
                             <form:input path="year" type="text" />
-                            <form:errors path="discription"/>
+                            <form:errors path="discription" cssClass="abr-error-message"/>
                         </p>
                         <p>
                             <label for="genre">Жанр</label>
-                            <form:select path="genre" itemValue="${newBook.genre}">
+                            <form:select path="genre" itemValue="${bookModel.genre}">
                                 <form:options type="text" items="${Genres}" />
                             </form:select>
-                            <form:errors path="genre"/>
+                            <form:errors path="genre" cssClass="abr-error-message"/>
                         </p>
                         <p>
                             <label for="original_lang">Язык оригинала</label>
-                            <form:select path="original_lang" itemValue="${newBook.original_lang}">
+                            <form:select path="original_lang" itemValue="${bookModel.original_lang}">
                                 <form:options type="text" items="${Languages}" />
                             </form:select>
-                            <form:errors path="original_lang"/>
+                            <form:errors path="original_lang" cssClass="abr-error-message"/>
                         </p>
                         <p>
                             <label for="author">Автор</label>
-                            <form:select path="author" itemValue="${newBook.author}">
-                                <form:options type="text" items="${Authors}" />
+                            <form:select path="author" itemLabel="${AuthorName}" itemValue="${bookModel.author}">
+                                <form:options items="${Authors}" itemLabel="fullName" itemValue="id"/>
                             </form:select>
-                            <form:errors path="author"/>
-                            <form:hidden path="authorId"/>
+                            <form:errors path="author" cssClass="abr-error-message"/>
                         </p>
                         <p>
-                            <form:errors path="errorMessage" type="text"/>
+                            <form:errors path="errorMessage" type="text" cssClass="abr-error-message"/>
                         </p>
                         <c:if test="${regime == 'Edit'}">
                             <c:if test="${saveResult != null}">
